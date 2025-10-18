@@ -17,7 +17,7 @@ function fetchSourceB(){
     return new Promise((resolve,reject)=>{
  setTimeout(()=>{
               if(random>4){
-            resolve({title:"Gaming news",source:"News Paper"});
+            resolve({title:"Geopolitics update",source:"News Paper"});
            }else{
             reject(`400 Bad Request`);
            }
@@ -30,7 +30,7 @@ function fetchSourceC(){
     return new Promise((resolve,reject)=>{
  setTimeout(()=>{
               if(random>4){
-            resolve({title:"Gaming news",source:"Blogs"});
+            resolve({title:"Sports events",source:"Blogs"});
            }else{
             reject(`401 Unauthorized`);
            }
@@ -43,7 +43,7 @@ function fetchSourceD(){
     return new Promise((resolve,reject)=>{
  setTimeout(()=>{
               if(random>4){
-            resolve({title:"Gaming news",source:"Podcast"});
+            resolve({title:"Console Gaming",source:"Podcast"});
            }else{
             reject(`403 Forbidden`);
            }
@@ -51,7 +51,15 @@ function fetchSourceD(){
     })
 }
 
-fetchSourceA().then(n=>console.log(n)).catch(n=>console.log(n))
-fetchSourceB().then(n=>console.log(n)).catch(n=>console.log(n))
-fetchSourceC().then(n=>console.log(n)).catch(n=>console.log(n))
-fetchSourceD().then(n=>console.log(n)).catch(n=>console.log(n))
+
+
+
+function aggeregateSequential(){
+return fetchSourceA().then(n=>{console.log(`Source A Resolved `,n); return fetchSourceB()}).catch(n=>{console.log(`Source A Rejected `,n)})
+.then(n=>{console.log(`Source B Resolved `,n);return fetchSourceC()}).catch(n=>{console.log(`Source B Rejected `,n);return fetchSourceC()})
+.then(n=>{console.log(`Source C Resolved `,n);return fetchSourceD()}).catch(n=>{console.log(`Source C Rejected `,n);return fetchSourceD()})
+.then(n=>console.log(`Source D Resolved `,n)).catch(n=>console.log(`Source D Rejected `,n))
+
+}
+
+aggeregateSequential()
