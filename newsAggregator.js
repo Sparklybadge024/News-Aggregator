@@ -55,10 +55,15 @@ function fetchSourceD(){
 
 
 function aggeregateSequential(){
-return fetchSourceA().then(n=>{console.log(`Source A Resolved `,n); return fetchSourceB()}).catch(n=>{console.log(`Source A Rejected `,n)})
-.then(n=>{console.log(`Source B Resolved `,n);return fetchSourceC()}).catch(n=>{console.log(`Source B Rejected `,n);return fetchSourceC()})
-.then(n=>{console.log(`Source C Resolved `,n);return fetchSourceD()}).catch(n=>{console.log(`Source C Rejected `,n);return fetchSourceD()})
-.then(n=>console.log(`Source D Resolved `,n)).catch(n=>console.log(`Source D Rejected `,n))
+return fetchSourceA()
+.then(n=>{console.log(`Source A Resolved `,n); return fetchSourceB();})
+.catch(i=>{console.log(`Source A Rejected `,i); return fetchSourceB();})
+.then(a=>{console.log(`Source B Resolved `,a);return fetchSourceC()})
+.catch(b=>{console.log(`Source B Rejected `,b);return fetchSourceC()})
+.then(c=>{console.log(`Source C Resolved `,c);return fetchSourceD()})
+.catch(d=>{console.log(`Source C Rejected `,d);return fetchSourceD()})
+.then(e=>console.log(`Source D Resolved `,e))
+.catch(f=>console.log(`Source D Rejected `,f))
 
 }
 
