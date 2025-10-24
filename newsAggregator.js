@@ -56,7 +56,7 @@ function fetchSourceD(){
 
 // Step 2:-
 
-function aggeregateSequential(){
+function aggregateSequential(){
 return fetchSourceA()
 .then(n=>{console.log(`Source A Resolved`,n); return fetchSourceB();},
       i=>{console.log(`Source A Rejected`,i); return fetchSourceB()})
@@ -66,9 +66,16 @@ return fetchSourceA()
       d=>{console.log(`Source C Rejected`,d); return fetchSourceD()})
 .then(e=>{console.log(`Source D Resolved`,e)},
       f=>{console.log(`Source D Resolved`,f)})
-
-
 }
 
-aggeregateSequential()
+aggregateSequential();
 
+function aggregateParallel(){
+    return Promise.all([fetchSourceA(),fetchSourceB(),fetchSourceC(),fetchSourceD()]).then(n=>console.log(n)).catch(n=>console.log(n))
+}
+
+aggregateParallel();
+
+// After calling aggeregateSequential and aggeregateParallel at the same time what i realised is:-
+// In sequential it called all the promises but one by one. As a result total time taken:- 1200+1400+1600+1800= 6 seconds
+// On the flip side in parallel it called all the promises at once, total time taken= almost 2 seconds or 1800 ms
