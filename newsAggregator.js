@@ -1,4 +1,4 @@
-// Step 1:-
+// Making 4 dummy promises that will act as sources of news.
 function fetchSourceA(){
 
     let random=Math.floor(Math.random()*10);
@@ -54,7 +54,7 @@ function fetchSourceD(){
 
 
 
-// Step 2:-
+// Making functionality so that promises can be called sequentially
 
 function aggregateSequential(){
 return fetchSourceA()
@@ -69,7 +69,7 @@ return fetchSourceA()
 }
 
 
-
+// Making functionality so that promises can be called parallely
 function aggregateParallel(){
     return Promise.all([fetchSourceA(),fetchSourceB(),fetchSourceC(),fetchSourceD()]).then(n=>console.log(n)).catch(n=>console.log(n))
 }
@@ -81,7 +81,7 @@ function aggregateParallel(){
 // On the flip side in parallel it called all the promises at once, total time taken= almost 2 seconds or 1800 ms
 
 
-// Step:-3
+// Adding a timeOut function so that slow or broken calls can be avoided.
 function withTimeOut(promise,ms){
     const timeOut=new Promise((_,reject)=>{
         setTimeout(()=>{
@@ -94,7 +94,7 @@ function withTimeOut(promise,ms){
 
 withTimeOut(aggregateSequential(),2000).catch(n=>console.log(n))
 
-// Step 4:-
+
 // Adding a retry function that will help promsis to recall if they get rejected.
 function retry(promise,retries){
     return promise().catch(()=>{
@@ -106,4 +106,5 @@ function retry(promise,retries){
 }
 
 retry(fetchSourceA,3).then(n=>console.log(n))
+
 
