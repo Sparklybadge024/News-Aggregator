@@ -93,3 +93,17 @@ function withTimeOut(promise,ms){
 }
 
 withTimeOut(aggregateSequential(),2000).catch(n=>console.log(n))
+
+// Step 4:-
+// Adding a retry function that will help promsis to recall if they get rejected.
+function retry(promise,retries){
+    return promise().catch(()=>{
+        if(retries===0){
+            throw `Failed after ${retries} retries`
+        }
+        return retry(promise,retries-1)
+        })
+}
+
+retry(fetchSourceA,3).then(n=>console.log(n))
+
